@@ -1,0 +1,17 @@
+export const COINS = {
+  BTC: "/coins/bitcoin.svg",
+  ETH: "/coins/ETH.svg",
+  LTC: "/coins/LTC.svg",
+  USDT: "/coins/USDT.svg",
+  SOL: "/coins/SOL.svg",
+  DOGE: "/coins/DOGE.svg",
+  BCH: "/coins/BCH.svg",
+  TRX: "/coins/TRX.svg",
+  BNB: "/coins/BNB.svg",
+  USDC: "/coins/USDC.svg",
+  BUSD: "/coins/BUSD.svg",
+  LINK: "/coins/LINK.svg",
+  SAND: "/coins/SAND.svg",
+  UNI: "/coins/UNI.svg",
+  MATIC: "/coins/MATIC.svg",
+};

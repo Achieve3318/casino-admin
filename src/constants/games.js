@@ -1,0 +1,17 @@
+export const GAMES = {
+  dice: "dice",
+  diamond: "diamond",
+  roulette: "roulette",
+  mines: "mines",
+  limbo: "limbo",
+  slide: "slide",
+  videopoker: "videopoker",
+  wheel: "wheel",
+  dragontower: "dragontower",
+  plinko: "plinko",
+  crash: "crash",
+  hilo: "hilo",
+  blackjack: "blackjack",
+  keno: "keno",
+  baccarat: "baccarat",
+};

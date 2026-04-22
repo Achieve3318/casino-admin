@@ -1,0 +1,18 @@
+.ant-transfer-list {
+  height: 100% !important;
+  max-height: 23rem;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+@media (max-width: 768px) {
+  .ant-transfer {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ant-transfer-list {
+    width: 100% !important; /* Full width on mobile */
+    margin-bottom: 10px;
+  }
+}

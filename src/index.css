@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: hidden;
+}
+
+p {
+  margin: 0;
+}
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+a .ant-menu-item {
+  padding-left: 24px !important;
+}
+
+.overflow-wrap-keep {
+  overflow-wrap: normal;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0144b1;
+}
+
+::-webkit-scrollbar:horizontal {
+  width: 8px;
+}
+
+.ql-editor {
+  min-height: 400px;
+  /* Set the desired minimum height */
+  padding: 10px;
+  background-color: #0f212e;
+  color: black !important;
+}
+
+.quill {
+  border-radius: 20px !important;
+}
+
+.ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: white !important;
+  background-color: #449ff4 !important;
+}
+
+.ant-menu-horizontal > .ant-menu-submenu-selected {
+  background-color: #449ff4 !important;
+}
+
+.ant-menu-horizontal > .ant-menu-item-selected {
+  background-color: #449ff4 !important;
+  color: white !important;
+}
+
+.ant-table-tbody > tr:nth-child(odd) {
+  background-color: #3a82ff21 !important;
+}
+
+.color-pick-selector > .ant-select-selector {
+  background: transparent !important;
+}
+
+.ant-dropdown-trigger {
+  color: #0f5da6 !important;
+
+}
+
+.ant-dropdown-trigger:hover {
+  color: #449ff4 !important;
+}
+
+.ant-table-filter-trigger.active {
+  color: white !important;
+}
+
+
+.ant-table-filter-trigger.active svg {
+  color: white !important;
+}

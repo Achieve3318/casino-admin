@@ -1,0 +1,1 @@
+export const TG_GAME_LIST = [{game: "EVEN_ODD", network: 'trx'}, {game: "BIG_SMALL", network: 'trx'},{game: "EVEN_ODD", network: 'polygon'}, {game: "BIG_SMALL", network: 'polygon'},{game: "BIG_SMALL", network: 'doge', isUTXO: true},{game: "BIG_SMALL", network: 'doge', isUTXO: true} ]

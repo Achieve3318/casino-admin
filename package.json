@@ -1,0 +1,67 @@
+{
+  "name": "stk-b",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/modifiers": "^9.0.0",
+    "@dnd-kit/sortable": "^10.0.0",
+    "antd": "^5.23.1",
+    "apexcharts": "^5.3.5",
+    "axios": "^1.7.9",
+    "cra-template": "1.2.0",
+    "dayjs": "^1.11.13",
+    "emoji-picker-react": "^4.12.0",
+    "font-awesome": "^4.7.0",
+    "jwt-decode": "^4.0.0",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.6.0",
+    "quill": "^2.0.3",
+    "react": "^18.0.0",
+    "react-apexcharts": "^1.7.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "^18.0.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-quill": "^2.0.0",
+    "react-router-dom": "^7.1.2",
+    "react-scripts": "5.0.1",
+    "socket.io-client": "^4.8.1",
+    "tailwind": "^4.0.0",
+    "toastr": "^2.1.4",
+    "use-sound": "^5.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "globals": "^16.0.0",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
+  }
+}
