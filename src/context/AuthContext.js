@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         axios.defaults.headers.common["Frontend-URL"] =
           `${window.location.origin}`;
-        postUrl('brazil',
+        postUrl(sitemode,
           "/api/user/blocked/list",
           {},
           (data) => {

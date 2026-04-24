@@ -91,7 +91,7 @@ const getMenus = (sitemode) => [
         link: "/management/livechat",
         role: USER_ROLE.ADMIN,
       },
-      ...(sitemode === "mx" ? [
+      ...(sitemode === "mx" || sitemode === "cop" ? [
         {
           label: "Lottery Management",
           icon: <RocketOutlined />,
@@ -116,12 +116,12 @@ const getMenus = (sitemode) => [
           link: "/management/chispazo",
           role: USER_ROLE.ADMIN,
         },
-        // {
-        //   label: "Melate 1min Management",
-        //   icon: <RocketOutlined />,
-        //   link: "/management/melate-1min",
-        //   role: USER_ROLE.ADMIN,
-        // },
+        {
+          label: "Melate 1min Management",
+          icon: <RocketOutlined />,
+          link: "/management/melate-1min",
+          role: USER_ROLE.ADMIN,
+        },
         {
           label: "Melate 5min Management",
           icon: <RocketOutlined />,

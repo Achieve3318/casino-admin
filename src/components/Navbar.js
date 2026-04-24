@@ -40,7 +40,7 @@ const Navbar = ({ menus = [], isRead, setIsRead }) => {
         <div className="h-full flex flex-col justify-between">
           <div className="overflow-y-auto">
             <div className=" text-[2em] text-white p-4 text-center font-bold">
-              {collapsed ? (sitemode === "brazil" ? "B" : "G") : (sitemode === "brazil" ? "BICHO" : "GRUPO25")}
+              {collapsed ? (sitemode === "brazil" ? "B" : sitemode === "cop" ? "COP" : "G") : (sitemode === "brazil" ? "BICHO" : sitemode === "mx" ? "MELATE" : sitemode === "cop" ? "COP" : "GRUPO25")}
             </div>
             <Menu mode="inline" selectedKeys={[location.pathname]}>
               {menus.map(({ label, icon, link, children, role }) => {

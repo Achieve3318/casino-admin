@@ -31,6 +31,7 @@ const SUB_SITE = {
   ghs: process.env.REACT_APP_GHS_URL,
   brazil: process.env.REACT_APP_BRAZIL_URL,
   grupo25: process.env.REACT_APP_GRUPO25_URL,
+  cop: process.env.REACT_APP_COP_URL,
 }
 
 export { convert2MK, isEmpty, isNumber, postUrl, blockedEmail, SUB_SITE };

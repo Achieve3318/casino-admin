@@ -63,7 +63,7 @@ export default function FiatDepositLog({ username = "" }) {
             `${Number(amount || 0).toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
-            })} ${sitemode === 'mx' ? 'MXN' : sitemode === 'taka' ? 'BDT' : sitemode === 'brazil' || sitemode === 'grupo25' ? 'BRL' : 'GHS'}`,
+            })} ${sitemode === 'mx' ? 'MXN' : sitemode === 'taka' ? 'BDT' : sitemode === 'brazil' || sitemode === 'grupo25' ? 'BRL' : sitemode === 'cop' ? 'COP' : 'GHS'}`,
         },
 
         {
@@ -112,7 +112,7 @@ export default function FiatDepositLog({ username = "" }) {
   const fetchFiatCount = useCallback(() => {
     postUrl(
       sitemode,
-      `/api/${sitemode === 'mx' ? 'toppay' : sitemode === 'taka' ? 'worldpay' : (sitemode === 'brazil' || sitemode === 'grupo25') ? 'winpay' : 'wepay'}/getCollectionHistoryCount`,
+      `/api/${sitemode === 'mx' ? 'toppay' : sitemode === 'taka' ? 'worldpay' : (sitemode === 'brazil' || sitemode === 'grupo25') ? 'winpay' : sitemode === 'cop' ? 'wePay' : 'wepay'}/getCollectionHistoryCount`,
       {
         filters: fiatParams.filters,
         sorter: fiatParams.sorter,
@@ -130,7 +130,7 @@ export default function FiatDepositLog({ username = "" }) {
     setFiatData(null);
     postUrl(
       sitemode,
-      `/api/${sitemode === 'mx' ? 'toppay' : sitemode === 'taka' ? 'worldPay' : (sitemode === 'brazil' || sitemode === 'grupo25') ? 'winpay' : 'wePay'}/getCollectionHistory`,
+      `/api/${sitemode === 'mx' ? 'toppay' : sitemode === 'taka' ? 'worldPay' : (sitemode === 'brazil' || sitemode === 'grupo25') ? 'winpay' : sitemode === 'cop' ? 'wePay' : 'wepay'}/getCollectionHistory`,
       {
         filters: fiatParams.filters,
         sorter: fiatParams.sorter,

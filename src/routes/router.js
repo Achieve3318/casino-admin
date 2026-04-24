@@ -147,7 +147,7 @@ const router = createBrowserRouter([
           {
             path: "lottery",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <LotteryManage />
                 </ProtectedRoute>
@@ -307,7 +307,7 @@ const router = createBrowserRouter([
           {
             path: "lottery-betting",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <LotteryBettingHistory />
                 </ProtectedRoute>
@@ -317,7 +317,7 @@ const router = createBrowserRouter([
           {
             path: "melate-betting",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <MelateBettingHistory />
                 </ProtectedRoute>
@@ -327,7 +327,7 @@ const router = createBrowserRouter([
           {
             path: "melate-retro-betting",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <MelateRetroBettingHistory />
                 </ProtectedRoute>
@@ -337,7 +337,7 @@ const router = createBrowserRouter([
           {
             path: "chispazo-betting",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <ChispazoBettingHistory />
                 </ProtectedRoute>
@@ -347,7 +347,7 @@ const router = createBrowserRouter([
           {
             path: "melate-1min-betting",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <Melate1MinBettingHistory />
                 </ProtectedRoute>
@@ -357,7 +357,7 @@ const router = createBrowserRouter([
           {
             path: "melate-5min-betting",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <Melate5MinBettingHistory />
                 </ProtectedRoute>
@@ -421,7 +421,7 @@ const router = createBrowserRouter([
           {
             path: "lottery",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <LotteryManage />
                 </ProtectedRoute>
@@ -447,7 +447,7 @@ const router = createBrowserRouter([
           {
             path: "melate",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <MelateManage />
                 </ProtectedRoute>
@@ -457,7 +457,7 @@ const router = createBrowserRouter([
           {
             path: "melate-retro",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <MelateRetroManage />
                 </ProtectedRoute>
@@ -467,7 +467,7 @@ const router = createBrowserRouter([
           {
             path: "chispazo",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <ChispazoManage />
                 </ProtectedRoute>
@@ -477,7 +477,7 @@ const router = createBrowserRouter([
           {
             path: "melate-1min",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <Melate1MinManage />
                 </ProtectedRoute>
@@ -487,7 +487,7 @@ const router = createBrowserRouter([
           {
             path: "melate-5min",
             element: (
-              <SiteModeRoute allowedModes={["mx"]}>
+              <SiteModeRoute allowedModes={["mx","cop"]}>
                 <ProtectedRoute>
                   <Melate5MinManage />
                 </ProtectedRoute>
