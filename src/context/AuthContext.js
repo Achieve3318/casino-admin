@@ -15,8 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [coins, setCoins] = useState({});
   const [fiat, setFiat] = useState([]);
   const [prices, setPrices] = useState({});
-  const [sitemode, setSiteMode] = useState("betwallet")
-  const [siteCurrency, setSiteCurrency] = useState("USD")
+  const [sitemode, setSiteMode] = useState("cop")
+  const [siteCurrency, setSiteCurrency] = useState("COP")
 
 
   useEffect(() => {
@@ -52,8 +52,6 @@ export const AuthProvider = ({ children }) => {
     }
     try {
       let user = jwtDecode(token);
-      console.log(user);
-
       if (user.timestamp + user.exp > Date.now()) {
         setAuth({
           isAuthenticated: true,
