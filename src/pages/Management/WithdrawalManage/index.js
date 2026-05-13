@@ -596,7 +596,7 @@ const WithdrawalManage = () => {
                 // Fetch fiat withdrawal total from backend if not betwallet
                 if (sitemode !== "betwallet") {
                     postUrl(sitemode,
-                        `/api/winpay/getWithdrawalsTotal`,
+                        `/api/${sitemode === "mx" ? "toppay" : sitemode === "taka" ? "worldpay" : (sitemode === "brazil" || sitemode === "grupo25") ? "winpay" : sitemode === "cop" ? "coppay" : "wepay"}/getWithdrawalsTotal`,
                         { filters: filters },
                         (fiatTotal) => {
                             // Convert crypto and fiat amounts to site currency

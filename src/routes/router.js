@@ -6,7 +6,7 @@ import Login from "../pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import SiteModeRoute from "./SiteModeRoute";
 
-import { BalanceLog, BonusLog, GameLog, LoginLog, PaymentLog, LotteryBettingHistory, MelateBettingHistory, MelateRetroBettingHistory, ChispazoBettingHistory, Melate1MinBettingHistory, Melate5MinBettingHistory, BichoBettingHistory } from '../pages/History';
+import { BalanceLog, BonusLog, GameLog, LoginLog, PaymentLog, LotteryBettingHistory, BichoBettingHistory } from '../pages/History';
 import LiveSupport from "../pages/LiveSupport";
 import { UserManage } from '../pages/Management';
 import { Advertise as ResAds, Coin as ResCoins, Description as ResDesc, SEO as ResSEO, Carousel as ResCarousel, Invite as ResInvite, DashboardPopup as ResDashboardPopup } from "../pages/Resources";
@@ -35,11 +35,6 @@ import BonusCard from "../pages/Management/BonusCard/index.js";
 import ReferVIP from "../pages/Settings/ReferralBonus/ReferVIP.js";
 import LiveSlots from "../pages/Resources/LiveSlots/index.js";
 import LotteryManage from "../pages/Management/LotteryManage/index.js";
-import MelateManage from "../pages/Management/MelateManage/index.js";
-import MelateRetroManage from "../pages/Management/MelateRetroManage/index.js";
-import ChispazoManage from "../pages/Management/ChispazoManage/index.js";
-import Melate1MinManage from "../pages/Management/Melate1MinManage/index.js";
-import Melate5MinManage from "../pages/Management/Melate5MinManage/index.js";
 import BichoManage from "../pages/Management/BichoManage/index.js";
 import LotteryHolidays from "../pages/Management/LotteryHolidays/index.js";
 import FiatDepositLog from "../pages/History/FiatDepositLog/index.js";
@@ -142,16 +137,6 @@ const router = createBrowserRouter([
               <ProtectedRoute>
                 <VIP />
               </ProtectedRoute>
-            ),
-          },
-          {
-            path: "lottery",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <LotteryManage />
-                </ProtectedRoute>
-              </SiteModeRoute>
             ),
           },
           {
@@ -307,59 +292,9 @@ const router = createBrowserRouter([
           {
             path: "lottery-betting",
             element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
+              <SiteModeRoute allowedModes={["cop"]}>
                 <ProtectedRoute>
                   <LotteryBettingHistory />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            )
-          },
-          {
-            path: "melate-betting",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <MelateBettingHistory />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            )
-          },
-          {
-            path: "melate-retro-betting",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <MelateRetroBettingHistory />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            )
-          },
-          {
-            path: "chispazo-betting",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <ChispazoBettingHistory />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            )
-          },
-          {
-            path: "melate-1min-betting",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <Melate1MinBettingHistory />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            )
-          },
-          {
-            path: "melate-5min-betting",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <Melate5MinBettingHistory />
                 </ProtectedRoute>
               </SiteModeRoute>
             )
@@ -421,7 +356,7 @@ const router = createBrowserRouter([
           {
             path: "lottery",
             element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
+              <SiteModeRoute allowedModes={["cop"]}>
                 <ProtectedRoute>
                   <LotteryManage />
                 </ProtectedRoute>
@@ -442,56 +377,6 @@ const router = createBrowserRouter([
               <ProtectedRoute>
                 <LotteryHolidays />
               </ProtectedRoute>
-            ),
-          },
-          {
-            path: "melate",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <MelateManage />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            ),
-          },
-          {
-            path: "melate-retro",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <MelateRetroManage />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            ),
-          },
-          {
-            path: "chispazo",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <ChispazoManage />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            ),
-          },
-          {
-            path: "melate-1min",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <Melate1MinManage />
-                </ProtectedRoute>
-              </SiteModeRoute>
-            ),
-          },
-          {
-            path: "melate-5min",
-            element: (
-              <SiteModeRoute allowedModes={["mx","cop"]}>
-                <ProtectedRoute>
-                  <Melate5MinManage />
-                </ProtectedRoute>
-              </SiteModeRoute>
             ),
           },
         ],

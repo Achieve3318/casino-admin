@@ -13,6 +13,18 @@ dayjs.extend(timezone);
 
 const { Title, Text } = Typography;
 
+const COLOMBIA_LOTTERIES = [
+    { slug: 'culona-dia', name: 'La Culona Día' },
+    { slug: 'culona-noche', name: 'La Culona Noche' },
+    { slug: 'chontico-dia', name: 'Chontico Día' },
+    { slug: 'chontico-noche', name: 'Chontico Noche' },
+    { slug: 'astro-sol', name: 'Super Astro Sol' },
+    { slug: 'astro-luna', name: 'Super Astro Luna' },
+    { slug: 'sinuano-dia', name: 'Sinuano Día' },
+    { slug: 'sinuano-noche', name: 'Sinuano Noche' },
+    { slug: 'saman-suerte', name: 'Samán de la Suerte' },
+];
+
 const LotteryManage = () => {
     const { logout, sitemode } = useAuth();
     const [todayResults, setTodayResults] = useState([]);
@@ -21,6 +33,8 @@ const LotteryManage = () => {
     const [selectedDate, setSelectedDate] = useState(dayjs().tz('America/Mexico_City'));
     const [scrapedData, setScrapedData] = useState(null);
     const [scraping, setScraping] = useState(false);
+    const [manualFetchLoading, setManualFetchLoading] = useState(false);
+    const [manualFetchResults, setManualFetchResults] = useState([]);
     const [multipliers, setMultipliers] = useState({});
     const [multiplierLoading, setMultiplierLoading] = useState(false);
     const [editingMultipliers, setEditingMultipliers] = useState({});
@@ -453,6 +467,80 @@ const LotteryManage = () => {
         }
     };
 
+    const handleManualFetchBySlug = async (slug) => {
+        try {
+            setManualFetchLoading(true);
+            const response = await axios.post(`${API_URL}/admin/lottery/colombia/fetch-latest/${slug}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            );
+
+            const payload = response.data?.data || {};
+            setManualFetchResults(prev => {
+                const next = prev.filter(item => item.slug !== slug);
+                next.unshift({
+                    slug,
+                    success: !!payload.success,
+                    result: payload.result || null,
+                    skipped: !!payload.skipped,
+                    error: payload.error || null,
+                    updatedAt: new Date().toISOString()
+                });
+                return next.slice(0, 20);
+            });
+
+            if (payload.success) {
+                success(`Fetched latest result for ${slug}`);
+                fetchLastDaysResults();
+                fetchTodayResults();
+            } else {
+                warning(payload.message || payload.error || payload.reason || `No new result for ${slug}`);
+            }
+        } catch (err) {
+            console.error('Error manual-fetching by slug:', err);
+            error(err.response?.data?.message || 'Failed to fetch latest result');
+        } finally {
+            setManualFetchLoading(false);
+        }
+    };
+
+    const handleManualFetchAll = async () => {
+        try {
+            setManualFetchLoading(true);
+            const response = await axios.post(`${API_URL}/admin/lottery/colombia/fetch-latest-all`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            );
+
+            const all = Array.isArray(response.data?.data) ? response.data.data : [];
+            setManualFetchResults(all.map(item => ({
+                slug: item.slug,
+                success: !!item.success,
+                result: item.result || null,
+                skipped: !!item.skipped,
+                error: item.error || null,
+                updatedAt: new Date().toISOString()
+            })));
+
+            success(response.data?.message || 'Manual fetch for all lotteries completed');
+            fetchLastDaysResults();
+            fetchTodayResults();
+        } catch (err) {
+            console.error('Error manual-fetching all lotteries:', err);
+            error(err.response?.data?.message || 'Failed to fetch all latest results');
+        } finally {
+            setManualFetchLoading(false);
+        }
+    };
+
     const columns = [
         {
             title: 'Sorteo',
@@ -644,6 +732,74 @@ const LotteryManage = () => {
                             </Space>
                         </div>
                     </div>
+                </Space>
+            </Card>
+
+            <Card title="Colombia Lottery Manual Fetch" className="mb-4">
+                <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+                    <Alert
+                        message="Get Latest Result from Source"
+                        description="Click any lottery button to manually fetch and save its latest official result. Use this when you want immediate sync without waiting for scheduler."
+                        type="info"
+                        showIcon
+                    />
+                    <div>
+                        <Button
+                            type="primary"
+                            onClick={handleManualFetchAll}
+                            loading={manualFetchLoading}
+                            disabled={manualFetchLoading}
+                            style={{ marginBottom: 12 }}
+                        >
+                            Fetch Latest For All Lotteries
+                        </Button>
+                        <Space wrap>
+                            {COLOMBIA_LOTTERIES.map((lot) => (
+                                <Button
+                                    key={lot.slug}
+                                    onClick={() => handleManualFetchBySlug(lot.slug)}
+                                    loading={manualFetchLoading}
+                                    disabled={manualFetchLoading}
+                                >
+                                    {lot.name}
+                                </Button>
+                            ))}
+                        </Space>
+                    </div>
+
+                    {manualFetchResults.length > 0 && (
+                        <Table
+                            size="small"
+                            rowKey={(row) => `${row.slug}-${row.updatedAt}`}
+                            pagination={false}
+                            dataSource={manualFetchResults}
+                            columns={[
+                                { title: 'Lottery', dataIndex: 'slug', key: 'slug' },
+                                {
+                                    title: 'Status',
+                                    key: 'status',
+                                    render: (_, row) => row.success ? (
+                                        <Text type="success">Saved</Text>
+                                    ) : row.skipped ? (
+                                        <Text type="secondary">No new draw</Text>
+                                    ) : (
+                                        <Text type="danger">Failed</Text>
+                                    )
+                                },
+                                {
+                                    title: 'Result',
+                                    dataIndex: 'result',
+                                    key: 'result',
+                                    render: (text) => text ? <Text strong style={{ fontFamily: 'monospace' }}>{text}</Text> : '-'
+                                },
+                                {
+                                    title: 'Message',
+                                    key: 'error',
+                                    render: (_, row) => row.error || (row.skipped ? 'Already recorded session' : '-')
+                                }
+                            ]}
+                        />
+                    )}
                 </Space>
             </Card>
 

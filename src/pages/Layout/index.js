@@ -91,44 +91,13 @@ const getMenus = (sitemode) => [
         link: "/management/livechat",
         role: USER_ROLE.ADMIN,
       },
-      ...(sitemode === "mx" || sitemode === "cop" ? [
+      ...(sitemode === "cop" ? [
         {
           label: "Lottery Management",
           icon: <RocketOutlined />,
           link: "/management/lottery",
           role: USER_ROLE.ADMIN,
         },
-        {
-          label: "Melate Management",
-          icon: <RocketOutlined />,
-          link: "/management/melate",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Melate Retro Management",
-          icon: <RocketOutlined />,
-          link: "/management/melate-retro",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Chispazo Management",
-          icon: <RocketOutlined />,
-          link: "/management/chispazo",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Melate 1min Management",
-          icon: <RocketOutlined />,
-          link: "/management/melate-1min",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Melate 5min Management",
-          icon: <RocketOutlined />,
-          link: "/management/melate-5min",
-          role: USER_ROLE.ADMIN,
-        },
-
       ] : []),
       ...(sitemode === "brazil" || sitemode === "grupo25" ? [
         {
@@ -294,43 +263,13 @@ const getMenus = (sitemode) => [
         link: "/history/game",
         role: USER_ROLE.SUPPORT,
       },
-      ...(sitemode === "mx" ? [
+      ...(sitemode === "cop" ? [
         {
           label: "Lottery Betting History",
           icon: <RocketOutlined />,
           link: "/history/lottery-betting",
           role: USER_ROLE.ADMIN,
         },
-        {
-          label: "Melate Betting History",
-          icon: <RocketOutlined />,
-          link: "/history/melate-betting",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Melate Retro Betting History",
-          icon: <RocketOutlined />,
-          link: "/history/melate-retro-betting",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Melate 1min Betting History",
-          icon: <RocketOutlined />,
-          link: "/history/melate-1min-betting",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Melate 5min Betting History",
-          icon: <RocketOutlined />,
-          link: "/history/melate-5min-betting",
-          role: USER_ROLE.ADMIN,
-        },
-        {
-          label: "Chispazo Betting History",
-          icon: <RocketOutlined />,
-          link: "/history/chispazo-betting",
-          role: USER_ROLE.ADMIN,
-        }
       ] : []),
       ...(sitemode === "brazil" || sitemode === "grupo25" ? [
         {

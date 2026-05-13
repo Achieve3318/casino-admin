@@ -137,7 +137,12 @@ const WithdrawalManageForFiat = ({ nameFilter, onFilterChange }) => {
             // WinPay uses ordStatus: "01" (Pending) or "06" (InProgress) are withdrawable
             const ordStatus = record.ordStatus;
             return ordStatus === "01" || ordStatus === "06";
-        } else {
+        }
+        
+        else if (sitemode === "cop") {
+            return record.orderStatus === "InProgress";
+        }
+        else {
             // Other payment methods use status: "InProgress" is withdrawable
             return record.status === "InProgress";
         }
@@ -170,6 +175,16 @@ const WithdrawalManageForFiat = ({ nameFilter, onFilterChange }) => {
     };
 
     const { coins, auth, logout, blockLists, sitemode } = useAuth();
+    const fiatProviderPath =
+        sitemode === "mx"
+            ? "toppay"
+            : sitemode === "taka"
+                ? "worldpay"
+                : (sitemode === "brazil" || sitemode === "grupo25")
+                    ? "winpay"
+                    : sitemode === "cop"
+                        ? "coppay"
+                        : "wepay";
     const timezoneName = useMemo(() => getTimezoneForSiteMode(sitemode), [sitemode]);
     const rangePickerTimeDefaults = useMemo(
         () => [
@@ -250,7 +265,10 @@ const WithdrawalManageForFiat = ({ nameFilter, onFilterChange }) => {
             width: "10em",
             align: 'center',
             className: "text-xs sm:text-sm md:text-base",
-            render: v => <><img src={coins["BRL"]} className="w-[1em] mr-2" />BRL</>,
+            render: v => {
+                const currency = sitemode === "cop" ? "COP" : "BRL";
+                return <><img src={coins[currency]} className="w-[1em] mr-2" />{currency}</>;
+            },
             isFilter: true
         },
         {
@@ -391,7 +409,7 @@ const WithdrawalManageForFiat = ({ nameFilter, onFilterChange }) => {
         }
 
         postUrl(sitemode,
-            `/api/winpay/getWithdrawalsListCount`,
+            `/api/${fiatProviderPath}/getWithdrawalsListCount`,
             {
                 filters: filters,
                 sorter: tableParams.sorter,
@@ -455,7 +473,7 @@ const WithdrawalManageForFiat = ({ nameFilter, onFilterChange }) => {
         }
 
         postUrl(sitemode,
-            `/api/winpay/getWithdrawalsList`,
+            `/api/${fiatProviderPath}/getWithdrawalsList`,
             {
                 page: tableParams.pagination.current - 1,
                 pageSize: tableParams.pagination.pageSize,
@@ -535,7 +553,7 @@ const WithdrawalManageForFiat = ({ nameFilter, onFilterChange }) => {
                 await new Promise(resolve => setTimeout(resolve, 2000))
             }
             try {
-                const data = await axios.post(SUB_SITE[sitemode] + "/api/winpay/confirm", { _id })
+                const data = await axios.post(SUB_SITE[sitemode] + `/api/${fiatProviderPath}/confirm`, { _id })
                 setProgressModal(prev => ({ ...prev, percent: (index + 1) * 100 / withdrawableIds.length, success: { percent: (prev.success?.percent || 0) + 100 / withdrawableIds.length }, result: [...(prev.result || []), { ...data }] }))
                 count++
             } catch (e) {
@@ -678,7 +696,7 @@ const WithdrawalManageForFiat = ({ nameFilter, onFilterChange }) => {
                             return
                         }
 
-                        postUrl(sitemode, "/api/winpay/cancel", { data: cancellableIds, cancelReason }, (data) => {
+                        postUrl(sitemode, `/api/${fiatProviderPath}/cancel`, { data: cancellableIds, cancelReason }, (data) => {
                             success(data.message)
                             fetchDataCount()
                             fetchData()
