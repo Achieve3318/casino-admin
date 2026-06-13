@@ -60,7 +60,7 @@ const ManualEditModal = ({
     if (comType === "Default") {
       const selPlan = plans.filter((plan) => plan.level === data.level);
       if (selPlan.length) {
-        setCommission(selPlan[0].rewardPercentage);
+        setCommission(selPlan[0].fixedReward || 0);
       }
     } else if (comType === "Manual") {
       setCommission(data.commission);
@@ -84,7 +84,7 @@ const ManualEditModal = ({
           <div className="flex-[0.75]">{data.level}</div>
         </div>
         <div className="mt-5 flex justify-between items-center">
-          <div>Commission</div>
+          <div>Reward($)</div>
           <div className="flex justify-between">
             <Radio.Group
               block
@@ -196,13 +196,14 @@ export default function ReferralManualManage() {
       className: "text-xs sm:text-sm md:text-base",
     },
     {
-      title: "Commission",
+      title: "Reward($)",
       dataIndex: "commission",
       width: "10em",
       align: "center",
 
       type: "number",
-      render: (data) => (data === null ? "default" : Number(data).toFixed(8)),
+      render: (data) =>
+        data === null ? "default" : `$${Number(data).toFixed(2)}`,
       className: "text-xs sm:text-sm md:text-base",
     },
     {

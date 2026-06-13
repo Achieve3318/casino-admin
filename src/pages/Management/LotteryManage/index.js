@@ -25,6 +25,11 @@ const COLOMBIA_LOTTERIES = [
     { slug: 'saman-suerte', name: 'Samán de la Suerte' },
 ];
 
+const COLOMBIA_RESULT_SLUGS = new Set(COLOMBIA_LOTTERIES.map((l) => l.slug));
+
+const colombiaLotteryNameBySlug = (slug) =>
+    COLOMBIA_LOTTERIES.find((l) => l.slug === slug)?.name || null;
+
 const LotteryManage = () => {
     const { logout, sitemode } = useAuth();
     const [todayResults, setTodayResults] = useState([]);
@@ -129,7 +134,7 @@ const LotteryManage = () => {
 
         try {
             setMultiplierLoading(true);
-            await axios.put(`${API_URL}/admin/lottery/multipliers/${gameType}`, 
+            await axios.put(`${API_URL}/admin/lottery/multipliers/${gameType}`,
                 { multiplier },
                 {
                     headers: {
@@ -216,7 +221,11 @@ const LotteryManage = () => {
             });
 
             if (response.data && response.data.data) {
-                setLastDaysResults(response.data.data);
+                const rows = Array.isArray(response.data.data) ? response.data.data : [];
+                const filtered = rows.filter(
+                    (r) => r.slug && COLOMBIA_RESULT_SLUGS.has(r.slug)
+                );
+                setLastDaysResults(filtered);
             }
         } catch (err) {
             console.error('Error fetching last days results:', err);
@@ -486,6 +495,7 @@ const LotteryManage = () => {
                     slug,
                     success: !!payload.success,
                     result: payload.result || null,
+                    issueNumber: payload.issueNumber != null && payload.issueNumber !== '' ? String(payload.issueNumber) : null,
                     skipped: !!payload.skipped,
                     error: payload.error || null,
                     updatedAt: new Date().toISOString()
@@ -525,6 +535,7 @@ const LotteryManage = () => {
                 slug: item.slug,
                 success: !!item.success,
                 result: item.result || null,
+                issueNumber: item.issueNumber != null && item.issueNumber !== '' ? String(item.issueNumber) : null,
                 skipped: !!item.skipped,
                 error: item.error || null,
                 updatedAt: new Date().toISOString()
@@ -543,15 +554,31 @@ const LotteryManage = () => {
 
     const columns = [
         {
-            title: 'Sorteo',
+            title: 'Lottery',
             dataIndex: 'lotteryId',
             key: 'lotteryId',
             align: 'center',
             width: '10%',
-            render: (text) => <Text strong>{text || 'N/A'}</Text>
+            render: (text, record) => {
+                const name = colombiaLotteryNameBySlug(record.slug);
+                return <Text strong>{name || text || 'N/A'}</Text>;
+            }
         },
         {
-            title: 'Fecha',
+            title: 'Issue Number',
+            dataIndex: 'issueNumber',
+            key: 'issueNumber',
+            align: 'center',
+            width: '12%',
+            render: (val) =>
+                val != null && String(val).trim() !== '' ? (
+                    <Text>{String(val)}</Text>
+                ) : (
+                    <Text type="secondary">—</Text>
+                )
+        },
+        {
+            title: 'Date',
             dataIndex: 'time',
             key: 'date',
             align: 'center',
@@ -559,19 +586,20 @@ const LotteryManage = () => {
             render: (time) => dayjs(time).tz('America/Mexico_City').format('DD/MM/YYYY')
         },
         {
-            title: 'Sorteo',
+            title: 'Time',
             dataIndex: 'time',
             key: 'time',
             align: 'center',
-            width: '25%',
+            width: '18%',
             render: (time) => dayjs(time).tz('America/Mexico_City').format('h:mm A')
         },
+
         {
-            title: 'Combinación Ganadora',
+            title: 'Result',
             dataIndex: 'result',
             key: 'result',
             align: 'center',
-            width: '30%',
+            width: '22%',
             render: (result) => (
                 <Text strong style={{ fontSize: '24px', color: '#fbbf24', fontFamily: 'monospace' }}>
                     {result}
@@ -582,7 +610,7 @@ const LotteryManage = () => {
             title: 'Action',
             key: 'action',
             align: 'center',
-            width: '10%',
+            width: '8%',
             render: (_, record) => (
                 <Popconfirm
                     title="Delete this result?"
@@ -605,7 +633,7 @@ const LotteryManage = () => {
             <Title level={2}>Lottery Results Management</Title>
 
             {/* Today's Results Input Section */}
-            <Card title="Set Today's Results" className="mb-4">
+            {sitemode !== "cop" && <Card title="Set Today's Results" className="mb-4">
                 <Space direction="vertical" size="large" style={{ width: '100%' }}>
                     <div className='flex gap-4 items-center'>
                         <div className='flex gap-1 items-center'>
@@ -673,10 +701,10 @@ const LotteryManage = () => {
                         Set All Results
                     </Button>
                 </Space>
-            </Card>
+            </Card>}
 
             {/* Auto-Fetch System Info */}
-            <Card title="Auto-Fetch System" className="mb-4">
+            {sitemode !== "cop" && <Card title="Auto-Fetch System" className="mb-4">
                 <Alert
                     message="Automatic Result Fetching"
                     description="If you don't set a result manually, the system will automatically fetch it from the official lottery website 20 minutes after each draw time (1:30 PM, 3:30 PM, 5:30 PM, 7:30 PM, 9:30 PM Mexico time)."
@@ -733,9 +761,9 @@ const LotteryManage = () => {
                         </div>
                     </div>
                 </Space>
-            </Card>
+            </Card>}
 
-            <Card title="Colombia Lottery Manual Fetch" className="mb-4">
+            {sitemode === "cop" && <Card title="Colombia Lottery Manual Fetch" className="mb-4">
                 <Space direction="vertical" size="middle" style={{ width: '100%' }}>
                     <Alert
                         message="Get Latest Result from Source"
@@ -793,6 +821,17 @@ const LotteryManage = () => {
                                     render: (text) => text ? <Text strong style={{ fontFamily: 'monospace' }}>{text}</Text> : '-'
                                 },
                                 {
+                                    title: 'Issue',
+                                    dataIndex: 'issueNumber',
+                                    key: 'issueNumber',
+                                    render: (val) =>
+                                        val != null && String(val).trim() !== '' ? (
+                                            <Text>{String(val)}</Text>
+                                        ) : (
+                                            <Text type="secondary">—</Text>
+                                        )
+                                },
+                                {
                                     title: 'Message',
                                     key: 'error',
                                     render: (_, row) => row.error || (row.skipped ? 'Already recorded session' : '-')
@@ -801,7 +840,7 @@ const LotteryManage = () => {
                         />
                     )}
                 </Space>
-            </Card>
+            </Card>}
 
             {/* Last 3 Days Results Display */}
             <Card title="Last 3 Days Results">
@@ -811,7 +850,7 @@ const LotteryManage = () => {
                     rowKey="_id"
                     loading={loading}
                     pagination={false}
-                    scroll={{ x: 800 }}
+                    scroll={{ x: 920 }}
                 />
             </Card>
 

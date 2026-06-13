@@ -86,13 +86,47 @@ const ReferralBonus = () => {
       className: "text-xs sm:text-sm md:text-base",
     },
     {
-      title: "RewardPercentage",
-      dataIndex: "rewardPercentage",
-      width: "7em",
-      type: "number",
-      render: (data) => data + " %",
+      title: "Reward($)",
+      dataIndex: "fixedReward",
+      width: "10em",
       align: "right",
       onHeaderCell: () => ({ style: { textAlign: "center" } }),
+      render: (value) => (
+        <>
+          {(value || 0).toLocaleString("en-US", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 8,
+            useGrouping: true,
+          })}{" "}
+          $
+        </>
+      ),
+      sorter: (a, b) => (a.fixedReward || 0) - (b.fixedReward || 0),
+      type: "number",
+      className: "text-xs sm:text-sm md:text-base",
+    },
+    {
+      title: "Reward(" + (prices[siteCurrency] ? siteCurrency : "USD") + ")",
+      dataIndex: "fixedReward",
+      width: "10em",
+      align: "right",
+      mode: "calc",
+      onHeaderCell: () => ({ style: { textAlign: "center" } }),
+      render: (value) => (
+        <>
+          {((value || 0) / (prices[siteCurrency] ? prices[siteCurrency] : 1)).toLocaleString(
+            "en-US",
+            {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 8,
+              useGrouping: true,
+            }
+          )}{" "}
+          {prices[siteCurrency] ? siteCurrency : "USD"}
+        </>
+      ),
+      sorter: (a, b) => (a.fixedReward || 0) - (b.fixedReward || 0),
+      type: "number",
       className: "text-xs sm:text-sm md:text-base",
     },
     {
